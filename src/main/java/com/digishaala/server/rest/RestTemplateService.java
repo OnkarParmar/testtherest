@@ -26,7 +26,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.protocol.HttpContext;
-
+import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -109,9 +109,15 @@ public class RestTemplateService {
 		httpPost.setEntity(new UrlEncodedFormEntity(params));
 		httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded");
 
+		String authToken = "";
 		CloseableHttpResponse httpResponse = httpClient.execute(httpPost);
-		return(httpResponse.getFirstHeader("auth_token").getValue());
+		  Header[] cookies = httpResponse.getHeaders("Set-Cookie");
+		  if (cookies != null && cookies.length > 0) {
+			  authToken = cookies[0].getValue().split(";")[0];;
+	        }
+		return authToken;
 	}
+	
 	private SSLContext createSSLContentext(){
 		try {
 			SSLContext sslcontext;
