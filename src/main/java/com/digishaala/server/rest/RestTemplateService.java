@@ -104,19 +104,7 @@ public class RestTemplateService {
 		httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded");
 
 		CloseableHttpResponse httpResponse = httpClient.execute(httpPost);
-
-		BufferedReader reader = new BufferedReader(new InputStreamReader(httpResponse.getEntity().getContent()));
-
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-		while ((inputLine = reader.readLine()) != null) {
-			response.append(inputLine);
-		}
-		reader.close();
-
-		System.out.println(response.toString());
-		httpClient.close();
-		return(response.toString());
+		return(httpResponse.getFirstHeader("auth_token").getValue());
 	}
 	private SSLContext createSSLContentext(){
 		try {
