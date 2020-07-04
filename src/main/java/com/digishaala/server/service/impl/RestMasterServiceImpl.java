@@ -22,9 +22,9 @@ public class RestMasterServiceImpl implements RestMasterService {
         System.out.println(restPublishRequestDTO);
 	try {
 		if (restPublishRequestDTO.library.equals("httpclient")) {
-        		response = restTemplateService.restTemplateAuthToken(restPublishRequestDTO.url, restPublishRequestDTO.username, restPublishRequestDTO.password);
-		} else {
         		response = restTemplateService.httpClientAuthToken(restPublishRequestDTO.url, restPublishRequestDTO.username, restPublishRequestDTO.password);
+		} else {
+        		response = restTemplateService.restTemplateAuthToken(restPublishRequestDTO.url, restPublishRequestDTO.username, restPublishRequestDTO.password);
 		}
         	System.out.println(response);
 		return response;
