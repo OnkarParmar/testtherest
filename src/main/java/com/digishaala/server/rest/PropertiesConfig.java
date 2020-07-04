@@ -1,4 +1,4 @@
-package com.digishaala.server.config;
+package com.digishaala.server.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
