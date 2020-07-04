@@ -66,8 +66,14 @@ public class RestTemplateService {
 		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(map, headers);
 
 		try {
+			String authToken = "";
 			ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
-			return response.getHeaders().toSingleValueMap().toString();
+			String cookies = response.getHeaders().getFirst("Set-Cookie");
+			if(null != cookies && !cookies.isEmpty()) {
+				authToken = cookies.split(";")[0];
+			}
+			return authToken;
+
 		} catch(RestClientResponseException e) {
 			return e.getResponseBodyAsString();
 		}
